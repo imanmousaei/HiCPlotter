@@ -765,7 +765,8 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 			ax1.set_xticks(tricks, minor=True)
 			ax1.xaxis.grid(True,which='minor',linewidth=2)
 		
-		if h_start > 0:
+		print("h_start", h_start)
+		if len(h_start) > 0:
 			if highlights:
 				for item in range(0,len(h_start)):
 					if dark: ax1.axvspan(h_start[item], h_end[item], facecolor='#78D400', alpha=0.30, linestyle='dashed')
