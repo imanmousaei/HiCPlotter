@@ -50,12 +50,12 @@ def read_HiCdata(filename,header=0,footer=0,clean_nans=True,smooth_noise=0.5,ins
 	try:
 		matrix = np.genfromtxt(filename,skip_header=header,filling_values='0',skip_footer=footer) 
 	except IOError:
-		print >>sys.stderr, 'cannot open', filename
+		print('cannot open', filename)
 		raise SystemExit
 	
 	if not randomBins and len(matrix[:,1]) != len(matrix[1,:]):
-		print len(matrix[:,1]),len(matrix[1,:])
-		print >>sys.stderr, 'unbalanced matrix('+filename+')! input should be a square matrix'
+		print(len(matrix[:,1]),len(matrix[1,:]))
+		print('unbalanced matrix('+filename+')! input should be a square matrix')
 		raise SystemExit
 	
 	if plotInsulation or plotTadDomains and not randomBins: nums,tricks=insulation(matrix,ins_window,rel_window)
@@ -97,7 +97,7 @@ def read_sparseHiCdata(filename,chromosome,bedFile,startBin,endBin,wholeGenome=F
 	try:
 		bed = open(bedFile,'r') 
 	except IOError:
-		print >>sys.stderr, 'cannot open', bedFile
+		print('cannot open', bedFile)
 		raise SystemExit
 	
 	for line in bed.readlines():
@@ -128,7 +128,7 @@ def read_sparseHiCdata(filename,chromosome,bedFile,startBin,endBin,wholeGenome=F
 	try:
 		matrixFile = open(filename,'r') 
 	except IOError:
-		print >>sys.stderr, 'cannot open', filename
+		print('cannot open', filename)
 		raise SystemExit
 	
 	for line in matrixFile.xreadlines():
@@ -154,12 +154,12 @@ def read_Cooldata(filename,chromosome,resolution,startBin,endBin,wholeGenome=Fal
 	
 	c = cooler.Cooler(filename)
 	if resolution != c.binsize: 
-		print 'Be aware: resolution is not matching with the cool file!'
+		print('Be aware: resolution is not matching with the cool file!')
 		raise SystemExit
 
 	start = startBin * resolution
 	if endBin == 0:
-		print 'Be aware: you did not enter a valid genomic range!'
+		print('Be aware: you did not enter a valid genomic range!')
 		end = c.chromsizes[chromosome]
 	else:
 		end = endBin * resolution
@@ -193,7 +193,7 @@ def read_bedGraph(filename,resolution,chromosome): # add stopping after certain 
 	try:
 		fone=open(filename,'r')
 	except IOError:
-		print >>sys.stderr, 'cannot open', filename
+		print('cannot open', filename)
 		raise SystemExit
 	
 	x_scores=[]
@@ -216,10 +216,10 @@ def read_bedGraph(filename,resolution,chromosome): # add stopping after certain 
 						texts.append(tags[5])
 				
 	if len(y_scores) !=0 and len(y_scores)!=len(x_scores):
-		print >>sys.stderr, 'BedGraph('+filename+') has some missing values'
+		print('BedGraph('+filename+') has some missing values')
 		raise SystemExit
 	if len(x_scores)==0 or len(x_scores2)==0:
-		print >>sys.stderr, 'BedGraph('+filename+') has some missing values'
+		print('BedGraph('+filename+') has some missing values')
 		raise SystemExit
 	# color and text controls
 	return x_scores,x_scores2,y_scores,colors,texts
@@ -244,7 +244,7 @@ def read_peakFile(filename,resolution,chromosome): # add stopping after certain 
 	try:
 		fone=open(filename,'r')
 	except IOError:
-		print >>sys.stderr, 'cannot open', filename
+		print('cannot open', filename)
 		raise SystemExit
 	
 	origin_x=[]
@@ -268,10 +268,10 @@ def read_peakFile(filename,resolution,chromosome): # add stopping after certain 
 				colors.append(hex)
 			
 	if len(origin_y) !=0 and len(origin_x)!=len(origin_y):
-		print >>sys.stderr, 'Peak file ('+filename+') has some missing values'
+		print('Peak file ('+filename+') has some missing values')
 		raise SystemExit
 	if len(origin_x)==0 or len(origin_y)==0:
-		print >>sys.stderr, 'Peak file ('+filename+') has some missing values'
+		print('Peak file ('+filename+') has some missing values')
 		raise SystemExit
 	# color control
 	return origin_x,origin_y,radius,colors
@@ -296,7 +296,7 @@ def read_epilogos(filename,resolution,chromosome,start,end): # add stopping afte
 	try:
 		fone=open(filename,'r')
 	except IOError:
-		print >>sys.stderr, 'cannot open', filename
+		print('cannot open', filename)
 		raise SystemExit
 	
 	x_scores=[]
@@ -317,7 +317,7 @@ def read_epilogos(filename,resolution,chromosome,start,end): # add stopping afte
 					y_dict[cols[x].replace('[','').replace(']','').replace(' ','')].append(float(cols[x-1].replace('[','').replace(']','').replace(' ','')))
 					
 	if len(y_dict.keys()) ==0:
-		print >>sys.stderr, 'Epilogos File('+filename+') has some missing values'
+		print('Epilogos File('+filename+') has some missing values')
 		raise SystemExit
 	return x_scores,y_dict
 
@@ -342,7 +342,7 @@ def read_genes(filename,resolution,chromosome,start,end):
 	try:
 		fone=open(filename,'r')
 	except IOError:
-		print >>sys.stderr, 'cannot open', filename
+		print('cannot open', filename)
 		raise SystemExit
 	
 	start = resolution * start
@@ -371,8 +371,8 @@ def read_genes(filename,resolution,chromosome,start,end):
 					row_genes[1].append(current_end)
 				else:
 					if prev_start > int(tags[1]):
-						print prev_end, int(tags[1])
-						print >>sys.stderr, 'Gene File ('+filename+') is not sorted.'
+						print(prev_end, int(tags[1]))
+						print('Gene File ('+filename+') is not sorted.')
 						raise SystemExit
 					else:
 						current_end = int(tags[2])
@@ -407,7 +407,7 @@ def read_genes(filename,resolution,chromosome,start,end):
 					prev_start = current_start
 							
 	if len(genes.keys()) ==0:
-		print >>sys.stderr, 'Gene File ('+filename+') has some missing values'
+		print('Gene File ('+filename+') has some missing values')
 		raise SystemExit
 	
 	return genes,len(row_list)+1,row_genes
@@ -667,8 +667,8 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 			size=end-start
 			if exp == 0 : mlength = len(matrix)
 			elif len(matrix) != mlength and not randomBins:
-				print len(matrix), mlength
-				print >>sys.stderr, 'unbalanced matrix size of '+files[exp]+' compared to '+files[0]+' ! matrix sizes should be equal'
+				print(len(matrix), mlength)
+				print('unbalanced matrix size of '+files[exp]+' compared to '+files[0]+' ! matrix sizes should be equal')
 				raise SystemExit
 			fourClike = []
 			for element in range(0,len(matrix)):
@@ -678,7 +678,7 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 			matrix,nums,tricks=read_Cooldata(files[exp],chromosome,resolution,start,end,wholeGenome,smoothNoise,window,tadRange,plotInsulation,plotTadDomains,randomBins)
 		else:
 			if bedFile == '':
-				print >>sys.stderr, 'an annotation bed file is required for triple-column sparse input.'
+				print('an annotation bed file is required for triple-column sparse input.')
 				raise SystemExit
 			matrix,nums,tricks,clength,fourClike=read_sparseHiCdata(files[exp],chromosome,bedFile,start,end,wholeGenome,smoothNoise,window,tadRange,plotInsulation,plotTadDomains,randomBins,anchor)
 			if end > clength: end=clength
@@ -796,7 +796,7 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 		''' Whole Genome matrix plotting '''
 		
 		if wholeGenome and numOfrows > rowcounter:
-			print >>sys.stderr, 'Whole genome can be plotted only as matrix - this feature will be improved in future releases'
+			print('Whole genome can be plotted only as matrix - this feature will be improved in future releases')
 			raise SystemExit
 		
 		''' Triangular (Rotated Matrix) plotting '''
@@ -846,7 +846,7 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 		''' Random Bins matrix/triangular plotting '''
 		
 		if randomBins and numOfrows > rowcounter:
-			print >>sys.stderr, 'Random bins data can be plotted only as matrix and triangular - this feature will be improved in future releases'
+			print('Random bins data can be plotted only as matrix and triangular - this feature will be improved in future releases')
 			raise SystemExit
 		
 		if anchor > 0: # normalization can be useful
@@ -854,7 +854,7 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 			ax3 = plt.subplot2grid((numOfrows, 4*len(files)), (rowcounter, exp*4), rowspan=1,colspan=4,sharex=ax1)
 			ax3.get_yaxis().set_label_coords(-0.125,0.5)
 			
-			#print fourClike,len(fourClike),start,end
+			#print(fourClike,len(fourClike),start,end)
 				
 			if not tripleColumn:
 				x_comps = np.arange(len(fourClike))
@@ -1022,7 +1022,7 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 						if len(histMax)==0:
 							ax3.set_ylim(ymin,max(y_comps[ystart:yend])+max(y_comps[ystart:yend])/10)
 							ymaxlims.append(max(y_comps[ystart:yend]))
-							#print ymin, max(y_comps[ystart:yend])+max(y_comps[ystart:yend])/10
+							#print(ymin, max(y_comps[ystart:yend])+max(y_comps[ystart:yend])/10)
 						else:
 							ax3.set_ylim(ymin,int(histMax[exp].split(',')[x])+int(histMax[exp].split(',')[x])/10)
 						ax3.set_ylabel(histLabels[exp].split(',')[x])
@@ -1990,7 +1990,7 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 	
 	warnings.simplefilter(action = "ignore", category = FutureWarning)
 	
-	print 'Plotting now!!'	
+	print('Plotting now!!'	)
 	if wholeGenome:
 		if highResolution and dPixels==200:
 			plt.savefig(output+'-WholeGenome-'+str(resolution/1000)+'K'+extension,dpi=200)
@@ -2095,71 +2095,71 @@ if __name__=='__main__':
 	args = vars(parser.parse_args())
 	
 	if len(args['files']) != len(args['names']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and names'
+		print('Upps!! Please provide equal number of HiC matrix and names')
 		raise SystemExit
 	if len(args['histograms'])>0 and len(args['histograms'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and BedGraphs'
+		print('Upps!! Please provide equal number of HiC matrix and BedGraphs')
 		raise SystemExit
 	if len(args['histLabels'])>0 and len(args['histLabels'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and BedGraph Labels'
+		print('Upps!! Please provide equal number of HiC matrix and BedGraph Labels')
 		raise SystemExit
 	if len(args['histograms'])>0:
 		if len(args['histograms'][0].split(','))>2 and args['superImpose']:
-			print >>sys.stderr, 'Upps!! Please use super impose (-si) only with 2 histogram files per condition'
+			print('Upps!! Please use super impose (-si) only with 2 histogram files per condition')
 			raise SystemExit
 	if len(args['histograms'])+len(args['histLabels'])+len(args['fillHist'])>0 and len(args['histLabels'])!=len(args['histograms']) and len(args['histLabels'])!=len(args['fillHist']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of BedGraphs, BedGraph Labels and FillUnders (0:no, 1:yes)'
+		print('Upps!! Please provide equal number of BedGraphs, BedGraph Labels and FillUnders (0:no, 1:yes)')
 		raise SystemExit
 	if len(args['barPlots'])>0 and len(args['barPlots'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and bar plots'
+		print('Upps!! Please provide equal number of HiC matrix and bar plots')
 		raise SystemExit
 	if len(args['barLabels'])>0 and len(args['barLabels'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and bar plot Labels'
+		print('Upps!! Please provide equal number of HiC matrix and bar plot Labels')
 		raise SystemExit
 	if len(args['barPlots'])+len(args['barLabels'])>0 and len(args['barPlots'])!=len(args['barLabels']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of bar plot and bar plot Labels'
+		print('Upps!! Please provide equal number of bar plot and bar plot Labels')
 		raise SystemExit
 	if len(args['barColors'])>0 and len(args['barPlots'])!=len(args['barColors']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of bar plot and bar plot colors'
+		print('Upps!! Please provide equal number of bar plot and bar plot colors')
 		raise SystemExit
 	if len(args['tilePlots'])>0 and len(args['tilePlots'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and tile plots'
+		print('Upps!! Please provide equal number of HiC matrix and tile plots')
 		raise SystemExit
 	if len(args['tileLabels'])>0 and len(args['tileLabels'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and tile plot Labels'
+		print('Upps!! Please provide equal number of HiC matrix and tile plot Labels')
 		raise SystemExit
 	if len(args['tilePlots'])+len(args['tileLabels'])>0 and len(args['tilePlots'])!=len(args['tileLabels']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of tile plot and tile plot Labels'
+		print('Upps!! Please provide equal number of tile plot and tile plot Labels')
 		raise SystemExit
 	if len(args['tileColors'])>0 and len(args['tilePlots'])!=len(args['tileColors']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of tile plot and tile plot colors'
+		print('Upps!! Please provide equal number of tile plot and tile plot colors')
 		raise SystemExit
 	if len(args['arcPlots'])>0 and len(args['arcPlots'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and arc plots'
+		print('Upps!! Please provide equal number of HiC matrix and arc plots')
 		raise SystemExit
 	if len(args['arcLabels'])>0 and len(args['arcLabels'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and arc plot Labels'
+		print('Upps!! Please provide equal number of HiC matrix and arc plot Labels')
 		raise SystemExit
 	if len(args['arcPlots'])+len(args['arcLabels'])>0 and len(args['arcPlots'])!=len(args['arcLabels']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of arc plot and arc plot Labels'
+		print('Upps!! Please provide equal number of arc plot and arc plot Labels')
 		raise SystemExit
 	if len(args['arcColors'])>0 and len(args['arcPlots'])!=len(args['arcColors']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of arc plot and arc plot colors'
+		print('Upps!! Please provide equal number of arc plot and arc plot colors')
 		raise SystemExit
 	if args['plotCustomDomains'] and len(args['customDomainsFile'])==0:
-		print >>sys.stderr, 'Upps!! Please provide a bedGraph file for custom domains'
+		print('Upps!! Please provide a bedGraph file for custom domains')
 		raise SystemExit
 	if args['plotCustomDomains'] and len(args['customDomainsFile'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and custom domains'
+		print('Upps!! Please provide equal number of HiC matrix and custom domains')
 		raise SystemExit
 	if args['start'] < 0 or args['end'] < 0 or args['end'] - args['start'] < 0:
-		print >>sys.stderr, 'Upps!! Start and end should be positive and end bigger than start'
+		print('Upps!! Start and end should be positive and end bigger than start')
 		raise SystemExit
 	if args['anchor'] > 0 and (args['end'] < args['anchor'] or args['anchor'] < args['start']):
-		print >>sys.stderr, 'Upps!! Please provide an anchor value between start and end bins'
+		print('Upps!! Please provide an anchor value between start and end bins')
 		raise SystemExit	
 	if len(args['peakFiles'])>0 and len(args['peakFiles'])!=len(args['files']):
-		print >>sys.stderr, 'Upps!! Please provide equal number of HiC matrix and peak files'
+		print('Upps!! Please provide equal number of HiC matrix and peak files')
 		raise SystemExit
 		
 	if args['verbose']:
