@@ -1,34 +1,11 @@
 import subprocess
 
 
-# python HiCPlotter.py 
-# -f data/HiC/Mouse/mES.chr2 
-# -n mES 
-# -chr chr2 
-# -r 40000 
-# -o HoxD 
-# -hist data/HiC/Mouse/GSM1334415_4C_Mouse_EScells_Hoxd4_smoothed_11windows.bedGraph,data/HiC/Mouse/GSM1334440_4C_Mouse_E9.5TB_Hoxd4_smoothed_11windows.bedGraph,data/HiC/Mouse/GSM1334412_4C_Mouse_EScells_Hoxd13_smoothed_11windows.bedGraph,data/HiC/Mouse/GSM1334437_4C_Mouse_E9.5TB_Hoxd13_smoothed_11windows.bedGraph,data/HiC/Mouse/GSM747534_ChIPseq_CTCF_ES_rep1.chr2.bedGraph 
-# -hl Hoxd4
-# -ES,Hoxd4
-# -Tail,Hoxd13
-# -ES,Hoxd13
-# -Tail,CTCF
-# -ES 
-# -s 1830 
-# -e 1880 
-# -fh 0 
-# -pi 0 
-# -pcd 1 
-# -pcdf data/mES_domains_mm9.bed 
-# -fhist 1,1,1,1,0 
-# -hm 2000,2000,2000,2000,50
-
-
 command = [
     "python", "HiCPlotter.py",
     "-f", "data/HiC/Mouse/mES.chr2",
     "-n", "mES",
-    "-o", "outputs/heatmap.png",
+    "-o", "outputs/heatmap",
     "-chr", "chr2",
 
     #  "-r", "25000",
