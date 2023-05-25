@@ -953,15 +953,15 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 					ax3.add_patch(rect)
 									
  				
- 				if plength <= 30 and geneLabels: # also consider the gene density
-					
+				if plength <= 30 and geneLabels: # also consider the gene density
+
 					#optimize the font size	
- 				
- 					gindex = nearest[gtrack].index(int(item.split('-')[1]))
- 					upgene = nearest[gtrack][gindex-1]
- 					if gindex < len(nearest[gtrack])-1: downgene = nearest[gtrack][gindex+1] 
- 					else: downgene = upgene
- 
+
+					gindex = nearest[gtrack].index(int(item.split('-')[1]))
+					upgene = nearest[gtrack][gindex-1]
+					if gindex < len(nearest[gtrack])-1: downgene = nearest[gtrack][gindex+1] 
+					else: downgene = upgene
+
 					if plength <= 2 or plength < 1: plength=1
 					elif plength <= 4: plength = 2
 					else : plength/1.5
@@ -974,10 +974,10 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 					elif float(gdist)/resolution < 2 and float(gdist)/resolution >1 and len(genes[item][1])>6: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=2/plength)
 					elif float(gdist)/resolution <= 1 and float(gdist)/resolution >= 0.25: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=1.8)
 					else: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=1)
-				
+
 					#if lblstndrd == 1:
- 						#if len(genes[item][1])>5: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=0.5)
- 						#else : ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=3)	
+						#if len(genes[item][1])>5: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=0.5)
+						#else : ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=3)	
 			
 			ax3.set_xlim(int(start or 1) - 0.5,int(start or 1) + length - 0.5)
 			ax3.set_ylim(0,trackCount+1)
@@ -1852,15 +1852,15 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 					ax3.add_patch(rect)
 									
  				
- 				if plength <= 30 and geneLabels: # also consider the gene density
+				if plength <= 30 and geneLabels: # also consider the gene density
 					
 					#optimize the font size	
- 				
- 					gindex = nearest[gtrack].index(int(item.split('-')[1]))
- 					upgene = nearest[gtrack][gindex-1]
- 					if gindex < len(nearest[gtrack])-1: downgene = nearest[gtrack][gindex+1] 
- 					else: downgene = upgene
- 
+
+					gindex = nearest[gtrack].index(int(item.split('-')[1]))
+					upgene = nearest[gtrack][gindex-1]
+					if gindex < len(nearest[gtrack])-1: downgene = nearest[gtrack][gindex+1] 
+					else: downgene = upgene
+
 					if plength <= 2 or plength < 1: plength=1
 					elif plength <= 4: plength = 2
 					else : plength/1.5
@@ -1872,10 +1872,10 @@ def HiCplotter(files=[],names=[],resolution=100000,chromosome='',output='',histo
 					elif float(gdist)/resolution < 2 and float(gdist)/resolution >1 and len(genes[item][1])>6: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=2/plength)
 					elif float(gdist)/resolution <= 1 and float(gdist)/resolution >= 0.25: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=1.8)
 					else: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=1)
-				
+
 					#if lblstndrd == 1:
- 						#if len(genes[item][1])>5: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=0.5)
- 						#else : ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=3)	
+						#if len(genes[item][1])>5: ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=0.5)
+						#else : ax3.text(gstart, trackCount-gtrack+0.5, genes[item][1], fontsize=3)	
 			
 			ax3.set_xlim(int(start or 1) - 0.5,int(start or 1) + length - 0.5)
 			ax3.set_ylim(0,trackCount+1)
